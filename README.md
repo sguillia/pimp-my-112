@@ -11,7 +11,7 @@ Ce projet a été réalisé en moins de 24h le week-end du 15 janvier 2016 lors 
  * Demander l'autorisation d'accéder au GPS du téléphone
  * Localiser la personne
  * Transmettre les coordonnées GPS à l'opérateur 112 via un serveur web et base SQL (`receive_coord.php`)
-* L'opérateur voit apparaître la position de la personne sur une carte google maps (`index.php`)
+* L'opérateur voit apparaître la position de la personne sur une carte google maps (`show_coord.php`)
 
 Le tout peut prendre une vingtaine de secondes. Une évolution possible est la transmission d'une photo après avoir transmis les coordonnées.
 
