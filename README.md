@@ -7,7 +7,7 @@ Ce projet a été réalisé en moins de 24h le week-end du 15 janvier 2016 lors 
 
 * L'opérateur 112 écrit ou copie le numéro de l'appelant dans l'interface (`index.php`)
 * Un SMS est envoyé à l'appelant via une API quelconque (`encode_number.php`)
-* L'appelant -possesseur d'un smartphone- clique sur le lien reçu et le mène vers une page web qui va :
+* L'appelant -possesseur d'un smartphone- clique sur le lien reçu et le mène vers une page web (`client.php`) qui va :
  * Demander l'autorisation d'accéder au GPS du téléphone
  * Localiser la personne
  * Transmettre les coordonnées GPS à l'opérateur 112 via un serveur web et base SQL (`receive_coord.php`)
