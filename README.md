@@ -1,8 +1,8 @@
 # pimp-my-112
 A project about locating someone who calls emergency services
 
-
 [FR]
+
 Ce projet a été réalisé en moins de 24h le week-end du 15 janvier 2016 lors du hackathon Nec mergitur, à l'école 42, dans le but de promouvoir la sécurité à Paris.
 
 - L'opérateur 112 écrit ou copie le numéro de l'appelant dans l'interface (index.php)
