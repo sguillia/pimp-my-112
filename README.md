@@ -15,4 +15,4 @@ Ce projet a été réalisé en moins de 24h le week-end du 15 janvier 2016 lors 
 
 Le tout peut prendre une vingtaine de secondes. Une évolution possible est la transmission d'une photo après avoir transmis les coordonnées.
 
-En raison du manque de temps, le code est peu commenté...
+En raison du manque de temps, le code est peu commenté.
