@@ -80,7 +80,7 @@ function request(number, geoloc_txt, picture_txt){
 
 	if (!isready)
 	{
-		console.log("Busy -- reload page if it is too long");
+		console.log("Busy");
 		return ;
 	}
 
@@ -191,17 +191,6 @@ function refresh_imap()
 </form>
 
 <p>Status: <span id="show"></span></p>
-
-</fieldset>
-
-<fieldset>
-<legend>Commandes speciales</legend>
-
-<form method="GET" action="client.php">
-<p>Simuler un client<br>Entrez l'ID a simuler: <input type="text" name="id"></p>
-</form>
-
-<p><a href="dump.php">Afficher la liste des requetes</a></p>
 
 </fieldset>
 

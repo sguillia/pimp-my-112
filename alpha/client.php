@@ -1,25 +1,24 @@
 <?php
 
-// TODO : show error if request was already responded to
+if (!isset($_GET['id']))
+    exit("Erreur : pas d'ID reçu !");
 
-if (isset($_GET['id']))
-	$id = $_GET['id'];
-else if ($argc == 2)
-{
-	echo "[SOURCE is ARGV]\n";
-	$id = $argv{1};
-}
-else
-{
-    exit("Erreur : pas d'ID reçu ! (ID attendu via GET ou argv -- mauvais lien)");
-}
+$id = $_GET['id'];
 
 if (!ctype_digit($id))
     exit("L'id n'est pas un nombre !");
 
-require("Private/sql.php");
+try
+{
+    $bdd = new PDO('mysql:host=...;dbname=...', "...", "...");
+}
+catch (Exception $e)
+{
+    die('DB error : ' . $e->getMessage());
+    exit();
+}
 
-$reponse = $bdd->query("SELECT * FROM requests WHERE ID='$id'");
+$reponse = $bdd->query("SELECT * FROM hackathon_112 WHERE ID='$id'");
 
 if (!($data = $reponse->fetch()))
     exit("ID inexistant");
@@ -68,7 +67,7 @@ function successCallback(position)
 {
     show("Localisation réussie ! Envoi en cours à l'opérateur...");
     //var mapUrl = "http://maps.google.com/maps/api/staticmap?center=";
-    var serverUrl = "receive_coord.php?id="+<?php echo "$id"; ?>+"&coord=";
+    var serverUrl = "http://.../receive_coord.php?id="+<?php echo "$id"; ?>+"&coord=";
     coord = position.coords.latitude + ',' + position.coords.longitude;
     window.location = serverUrl + coord;
     //mapUrl = mapUrl + coord;
@@ -111,6 +110,6 @@ Prise de photo
 }
 else
 {
-echo "Rien à faire ! -- ID deja valide";
+echo "Rien à faire !";
 }
 ?>

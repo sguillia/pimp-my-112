@@ -19,23 +19,21 @@ if (!$do_geoloc && !$do_picture)
 
 $num = $_GET['number'];
 
-$time = time();
-$visited = "''";
-
 if (!is_valid_phonenumber($num))
 	exit("Invalid phone number $num");
 
-require("Private/sql.php");
-
-echo "[WARNING injection [!]]";
-
-if (!($reponse = $bdd->query("INSERT INTO requests (phonenumber, do_geoloc, do_picture, timestamp, visited) VALUES ('$num', $do_geoloc, $do_picture, $time, $visited)")))
+try
 {
-	echo "<pre>";
-	print_r($bdd->errorInfo());
-	echo "</pre>";
-	exit("Failed to insert data into DB");
+	$bdd = new PDO('mysql:host=...;dbname=...', "...", "...");
 }
+catch (Exception $e)
+{
+	die('DB error : ' . $e->getMessage());
+	exit();
+}
+
+if (!($reponse = $bdd->query("INSERT INTO hackathon_112 (phonenumber, do_geoloc, do_picture) VALUES ('$num', $do_geoloc, $do_picture)")))
+	exit("Failed to insert data into DB");
 
 $last_id = $bdd->lastInsertId();
 
@@ -43,7 +41,8 @@ $url_to_send = "http://.../client.php?id=".$last_id;
 
 
 //echo "Ok<br>".$url_to_send;
-echo "Ok, prepared for SMS dispatch\n";
+echo "Ok";
+
 
 $url1 = "Insert the API URL of the SMS sender here";
 $url2 = urlencode($url_to_send);
@@ -52,17 +51,6 @@ $fullurl = $url1.$url2;
 //echo "<br>".$fullurl;
 
 // This request sends a message with the API we had
-$ret = file_get_contents($fullurl);
-
-if ($ret === false)
-{
-	echo "request seem to have failed ...\n";
-}
-else
-{
-	echo "Received non-false ACK\n";
-}
-
-echo "Done."
+file_get_contents($fullurl);
 
 ?>
