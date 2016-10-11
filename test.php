@@ -1,12 +1,8 @@
 <?php
 
-$arr = Array("key"=>"value");
+require("auth.php");
+check_auth();
 
-//extract($arr, EXTR_PREFIX_ALL, "foo");
-extract($arr);
-
-$list = get_defined_vars();
-foreach($list as $key=>$name)
-	echo $key."\n";
+require 'Private/log.php';
 
 ?>

@@ -2,6 +2,9 @@
 
 // TODO : show error if request was already responded to
 
+require("auth.php");
+check_auth();
+
 if (isset($_GET['id']))
 	$id = $_GET['id'];
 else if ($argc == 2)
@@ -24,6 +27,10 @@ $reponse = $bdd->query("SELECT * FROM requests WHERE ID='$id'");
 if (!($data = $reponse->fetch()))
     exit("ID inexistant");
 
+if (isset($_GET['geoloc_success']))
+{
+	echo "OK! Rien à faire! -- ID deja valide";
+}
 if (isset($_GET['geoloc_success']))
 {
     exit("Localisation réussie et transmise à l'opérateur !");

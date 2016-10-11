@@ -1,7 +1,12 @@
-<html>
+<?php
+
+require('auth.php');
+check_auth();
+
+?><html>
 <head>
 
-<title>Urgences police/pompiers</title>
+<title>Urgences localisation</title>
 
 <meta http-equiv="cache-control" content="max-age=0" />
 <meta http-equiv="cache-control" content="no-cache" />
@@ -23,7 +28,7 @@ div{
 	color: red;
 }
 
-#do_geoloc, #do_picture, input[type="submit"]{
+#do_geoloc, #do_picture, #numbersubmit{
 	margin-left: 50px;
 }
 
@@ -80,7 +85,7 @@ function request(number, geoloc_txt, picture_txt){
 
 	if (!isready)
 	{
-		console.log("Busy -- reload page if it is too long");
+		set_num_errmsg("Occupe -- actualisez la page si ce message d'erreur reste");
 		return ;
 	}
 
@@ -94,6 +99,10 @@ function request(number, geoloc_txt, picture_txt){
 			reload_map();
 		} else if (xhr.readyState < 4) {
 			document.getElementById("show").innerHTML = "Loading " + xhr.readyState + "/4";
+		}
+		else
+		{
+			alert("Unhandled situation, xhr .status is " + xhr.status + " ... Reload page and report bug");
 		}
 	};
 	xhr.open("GET", "encode_number.php?number="+number+geoloc_txt+picture_txt, true);
@@ -111,7 +120,10 @@ function submit_phonenumber()
 
 	elem = document.getElementById("phonenumber");
 	if (!xhr)
+	{
+		alert("Erreur : XHR non supporte");
 		return ;
+	}
 	elem.value = elem.value.replace(/ /g,'');
 	if (isNaN(elem.value))
 	{
@@ -149,17 +161,30 @@ function refresh_imap()
 
 	if (icontent)
 	{
-		if (icontent.getElementById('mybody') && icontent.getElementById('mybody').innerHTML == "<img src=\"france.png\">")
+		var got_body;
+		got_body = icontent.getElementById('mybody');
+		var got_waiting = 0;
+		if (got_body)
 		{
+			var waiting_index = got_body.outerHTML.indexOf("__112_LOCALIZATION_WAITING__");
+			//console.log("Waiting index is " + waiting_index);
+			//console.log(got_body.outerHTML);
+			if (waiting_index != -1)
+				got_waiting = 1;
+		}
+		if (got_waiting)
+		{
+			console.log("Will refresh because found WAITING keyword");
 			reload_map();
 		}
 		else
 		{
-
+			console.log("Not refreshing");
 		}
 	}
 	else
 	{
+		console.log("Will refresh because of unknow IFRAME state");
 		reload_map();
 	}
 }
@@ -185,7 +210,7 @@ function refresh_imap()
 	<input type="text" name="phonenumber" id="phonenumber" autocomplete="off">
 	<input type="checkbox" name="do_geoloc" id="do_geoloc" checked><label for="do_geoloc">Geolocalisation</label>
 	<input type="checkbox" name="do_picture" id="do_picture"><label for="do_picture">Photo</label>
-	&nbsp;<input type="submit" value="Send">
+	&nbsp;<input type="submit" id="numbersubmit" value="Send">
 	<span id="num_errmsg"></span>
 </p>
 </form>
@@ -201,7 +226,16 @@ function refresh_imap()
 <p>Simuler un client<br>Entrez l'ID a simuler: <input type="text" name="id"></p>
 </form>
 
+<form method="GET" action="receive_coord.php">
+<p>Simuler un retour GPS<br>
+Entrez l'ID a simuler: <input type="text" name="id"><br>
+Coordonnees GPS: <input type="text" name="coord" value="48.8965847,2.3161873"><br>
+<input type="submit" value="Send"></p>
+</form>
+
 <p><a href="dump.php">Afficher la liste des requetes</a></p>
+
+<p><a href="logout.php">D&eacute;connexion</a></p>
 
 </fieldset>
 

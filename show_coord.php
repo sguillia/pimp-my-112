@@ -1,5 +1,7 @@
 <?php
 
+require("auth.php");
+check_auth();
 require("Private/sql.php");
 
 // ******************************* //
@@ -27,9 +29,24 @@ if ($data = $reponse->fetch())
 {
 
 
-	if ($data['do_geoloc'])
+	if ($data['do_geoloc']) // this is used to know if coordinates has been received
 	{
-		exit("<html><body id='mybody'>Waiting for localization of ID '$last_id'</body></html>");
+		?>
+<html>
+<body id='mybody'>
+<!--__112_LOCALIZATION_WAITING__-->
+<p>En attente de localisation ...</p>
+<pre>
+ID:_________________________   <?php echo $last_id; ?>&zwnj;
+Numero:_____________________   <?php echo $data['phonenumber']; ?>&zwnj;
+Heure de la demande:________   <?php echo $data['timestamp']; ?>&zwnj;
+Dernier rafraichissement: __   <?php echo date('Y-m-d H:i:s'); ?>&zwnj;
+Page visitee:_______________   <?php echo $data['visited']; ?>&zwnj;
+</pre>
+</body>
+</html>
+<?php
+		exit();
 		//exit("<html><body id='mybody'><img src='france.png'></body></html>");
 	}
 
@@ -40,6 +57,39 @@ else
 {
 	exit("Error for the ID '$last_id' : ID not found in database\n");
 }
+
+
+
+// --------- En attendant une carte valable
+
+?>
+
+<html>
+<body id='mybody'>
+<!--__112_LOCALIZATION_DONE__-->
+<p>Ok ! Affichage de la carte [basique]</p>
+<pre>
+ID:_________________________   <?php echo $last_id; ?>&zwnj;
+Numero:_____________________   <?php echo $data['phonenumber']; ?>&zwnj;
+Heure de la demande:________   <?php echo $data['timestamp']; ?>&zwnj;
+Dernier rafraichissement: __   <?php echo date('Y-m-d H:i:s'); ?>&zwnj;
+Page visitee:_______________   <?php echo $data['visited']; ?>&zwnj;
+[!] Coordonnees :___________   <?php echo $data['coord']; ?>&zwnj;
+</pre>
+<iframe
+width="600"
+height="450"
+frameborder="0" style="border:0"
+src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCumJJs-B-bUKKyKeidx9fXZdR2yXYe_yk
+&q=<?php echo $coord; ?>" allowfullscreen>
+</iframe>
+</body>
+</html>
+
+<?php
+exit();
+// ---------
+
 
 
 ?>
@@ -149,6 +199,8 @@ var boundsListener = google.maps.event.addListener((map), 'bounds_changed', func
 <body>
 
 <p>In show_coord.php : now showing map with coordinates, ID <?php echo $last_id; ?></p>
+
+<!-- Caution: google maps api key is restricted to the domain name -->
 
 <div id="map_wrapper">
 <div id="map_canvas" class="mapping"></div>

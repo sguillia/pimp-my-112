@@ -1,6 +1,8 @@
 <?php
 
-require("../../Private/sql.php");
+date_default_timezone_set('Europe/Paris');
+
+require("../../Private/112/sql.php");
 
 try
 {

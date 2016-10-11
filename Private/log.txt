@@ -1,0 +1,40 @@
+Log from IP '178.20.51.116' at timestamp '1476207962'
+encode_number.php has passed verifications, Array
+(
+    [number] => 0768151710
+    [do_geoloc] => 
+)
+
+
+Log from IP '178.20.51.116' at timestamp '1476207962'
+Sms sending has returned :
+
+
+Log from IP '178.20.51.116' at timestamp '1476208023'
+encode_number.php has passed verifications, Array
+(
+    [number] => 0768151710
+    [do_geoloc] => 
+)
+
+
+Log from IP '178.20.51.116' at timestamp '1476208023'
+Sms sending has returned :
+/bin/bash: sms.sh: No such file or directory
+
+
+Log from IP '178.20.51.116' at timestamp '1476208068'
+encode_number.php has passed verifications, Array
+(
+    [number] => 0768151710
+    [do_geoloc] => 
+)
+
+
+Log from IP '178.20.51.116' at timestamp '1476208069'
+Sms sending has returned :
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   248  100   134  100   114    235    200 --:--:-- --:--:-- --:--:--   235
+{"code": 21604, "message": "A 'To' phone number is required.", "more_info": "https://www.twilio.com/docs/errors/21604", "status": 400}
+

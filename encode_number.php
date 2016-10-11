@@ -1,5 +1,10 @@
 <?php
 
+require("auth.php");
+check_auth();
+require("Private/log.php");
+require("Private/sms.php");
+
 function is_valid_phonenumber($num)
 {
 	if (ctype_digit($num))
@@ -19,17 +24,19 @@ if (!$do_geoloc && !$do_picture)
 
 $num = $_GET['number'];
 
-$time = time();
 $visited = "''";
 
 if (!is_valid_phonenumber($num))
 	exit("Invalid phone number $num");
 
+logtxt("encode_number.php has passed verifications, ".
+print_r($_GET, true));
+
 require("Private/sql.php");
 
 echo "[WARNING injection [!]]";
 
-if (!($reponse = $bdd->query("INSERT INTO requests (phonenumber, do_geoloc, do_picture, timestamp, visited) VALUES ('$num', $do_geoloc, $do_picture, $time, $visited)")))
+if (!($reponse = $bdd->query("INSERT INTO requests (phonenumber, do_geoloc, do_picture, timestamp, visited) VALUES ('$num', $do_geoloc, $do_picture, now(), $visited)")))
 {
 	echo "<pre>";
 	print_r($bdd->errorInfo());
@@ -39,20 +46,27 @@ if (!($reponse = $bdd->query("INSERT INTO requests (phonenumber, do_geoloc, do_p
 
 $last_id = $bdd->lastInsertId();
 
-$url_to_send = "http://.../client.php?id=".$last_id;
+$url_to_send = "http://bilow.tk/bilow/112/client.php?id=".$last_id;
 
 
 //echo "Ok<br>".$url_to_send;
 echo "Ok, prepared for SMS dispatch\n";
 
-$url1 = "Insert the API URL of the SMS sender here";
-$url2 = urlencode($url_to_send);
+//$url1 = "Insert the API URL of the SMS sender here";
+//$url2 = urlencode($url_to_send);
 
-$fullurl = $url1.$url2;
+//$fullurl = $url1.$url2;
 //echo "<br>".$fullurl;
 
 // This request sends a message with the API we had
-$ret = file_get_contents($fullurl);
+//$ret = file_get_contents($fullurl);
+
+$text="Localisation 112 : $url_to_send";
+
+$ret = sms($number, $text);
+logtxt("Sms sending has returned :\n".$ret);
+
+//---------------- sms($num, $text);
 
 if ($ret === false)
 {

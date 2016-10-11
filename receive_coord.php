@@ -1,5 +1,8 @@
 <?php
 
+require("auth.php");
+check_auth();
+
 if (!isset($_GET['id']))
     exit("Erreur : pas d'ID reçu !");
 

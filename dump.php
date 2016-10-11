@@ -1,4 +1,8 @@
 <?php
+
+require("auth.php");
+check_auth();
+
 require("Private/sql.php");
 
 $rep = $bdd->query("SELECT * FROM requests");
