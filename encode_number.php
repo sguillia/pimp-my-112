@@ -1,7 +1,7 @@
 <?php
 
-//require("auth.php");
-//check_auth();
+require("auth.php");
+check_auth();
 require("Private/log.php");
 require("Private/sms.php");
 
