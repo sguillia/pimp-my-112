@@ -1,9 +1,10 @@
 <?php
 
-require("auth.php");
-check_auth();
+//require("auth.php");
+//check_auth();
 require("Private/log.php");
 require("Private/sms.php");
+
 
 function is_valid_phonenumber($num)
 {
@@ -63,7 +64,7 @@ echo "Ok, prepared for SMS dispatch\n";
 
 $text="Localisation 112 : $url_to_send";
 
-$ret = sms($number, $text);
+$ret = sms($num, $text);
 logtxt("Sms sending has returned :\n".$ret);
 
 //---------------- sms($num, $text);

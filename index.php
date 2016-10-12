@@ -235,6 +235,10 @@ Coordonnees GPS: <input type="text" name="coord" value="48.8965847,2.3161873"><b
 
 <p><a href="dump.php">Afficher la liste des requetes</a></p>
 
+<p><a href="log.php">Logs</a></p>
+
+<p><a href="param.php?smsenable=1">Enable sms</a> - <a href="param.php?smsenable=0">Disable sms</a> - Currently <?php readfile("Private/smsenable.txt"); ?></p>
+
 <p><a href="logout.php">D&eacute;connexion</a></p>
 
 </fieldset>

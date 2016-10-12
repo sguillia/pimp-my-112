@@ -27,10 +27,13 @@ $reponse = $bdd->query("SELECT * FROM requests WHERE ID='$id'");
 if (!($data = $reponse->fetch()))
     exit("ID inexistant");
 
-if (isset($_GET['geoloc_success']))
+/*if (isset($_GET['geoloc_success'])
+	&& !$data['do_geoloc']
+	&& !$data['do_picture'])
 {
 	echo "OK! Rien à faire! -- ID deja valide";
 }
+*/
 if (isset($_GET['geoloc_success']))
 {
     exit("Localisation réussie et transmise à l'opérateur !");

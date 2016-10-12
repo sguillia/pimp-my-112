@@ -2,7 +2,7 @@
 
 date_default_timezone_set('Europe/Paris');
 
-require("../../Private/112/sql.php");
+require_once(__DIR__."/../../../Private/112/sql.php");
 
 try
 {
